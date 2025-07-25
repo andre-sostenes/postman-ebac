@@ -1,0 +1,346 @@
+{
+	"info": {
+		"_postman_id": "6bcfbdd0-cf92-4610-8d8f-48bcae8ec693",
+		"name": "Serverest - Testes de Usuários",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46665355",
+		"_collection_link": "https://interstellar-spaceship-1254561.postman.co/workspace/80680b08-4d95-4c0f-8b55-9286714d3ef3/collection/46665355-6bcfbdd0-cf92-4610-8d8f-48bcae8ec693?action=share&source=collection_link&creator=46665355"
+	},
+	"item": [
+		{
+			"name": "Listar usuários",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code é 200\", function () {",
+							"    pm.response.to.be.success;",
+							"});",
+							"",
+							"if (pm.response.code === 201 || pm.response.code === 200) {",
+							"    let jsonData = pm.response.json();",
+							"    if (jsonData._id) {",
+							"        pm.collectionVariables.set(\"idUsuario\", jsonData._id);",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar usuário com sucesso",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code é 200 para criar usuário com sucesso\", function () {",
+							"    pm.response.to.be.success;",
+							"});",
+							"",
+							"if (pm.response.code === 201 || pm.response.code === 200) {",
+							"    let jsonData = pm.response.json();",
+							"    if (jsonData._id) {",
+							"        pm.collectionVariables.set(\"idUsuario\", jsonData._id);",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nome\": \"João QA\",\n  \"email\": \"joao2@qa.com\",\n  \"password\": \"teste123\",\n  \"administrador\": \"true\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar usuário com email existente (negativo)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code é 400 para email existente\", function () {",
+							"    pm.response.to.be.success;",
+							"});",
+							"",
+							"if (pm.response.code === 401 || pm.response.code === 400) {",
+							"    let jsonData = pm.response.json();",
+							"    if (jsonData._id) {",
+							"        pm.collectionVariables.set(\"idUsuario\", jsonData._id);",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nome\": \"João QA\",\n  \"email\": \"joao@qa.com\",\n  \"password\": \"teste123\",\n  \"administrador\": \"true\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Editar usuário (exemplo com ID)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code é 200 para editar usuário\", function () {",
+							"    pm.response.to.be.success;",
+							"});",
+							"",
+							"if (pm.response.code === 201 || pm.response.code === 200) {",
+							"    let jsonData = pm.response.json();",
+							"    if (jsonData._id) {",
+							"        pm.collectionVariables.set(\"idUsuario\", jsonData._id);",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nome\": \"João QA\",\n  \"email\": \"joaoeditado@qa.com\",\n  \"password\": \"novaSenha123\",\n  \"administrador\": \"false\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/usuarios/{{idUsuario}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios",
+						"{{idUsuario}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar usuário com campo obrigatório ausente (negativo)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code é 400 campo obrigatório ausente\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"Usuário Inválido\",\n    \"email\": \"\",\n    \"password\": \"123456\",\n    \"administrador\": \"false\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/usuarios/{{idUsuarioInválido}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios",
+						"{{idUsuarioInválido}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Excluir usuário (exemplo com ID)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code é 200 para excluir usuário\", function () {",
+							"    pm.response.to.be.success;",
+							"});",
+							"",
+							"if (pm.response.code === 201 || pm.response.code === 200) {",
+							"    let jsonData = pm.response.json();",
+							"    if (jsonData._id) {",
+							"        pm.collectionVariables.set(\"idUsuario\", jsonData._id);",
+							"    }",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/usuarios/{{idUsuario}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"usuarios",
+						"{{idUsuario}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "idUsuario",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "idUsuarioInválido",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
