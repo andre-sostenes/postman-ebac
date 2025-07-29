@@ -16,15 +16,7 @@
 						"exec": [
 							"pm.test(\"Status code é 200 para listar usuários\", function () {",
 							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"if (pm.response.code === 200) {",
-							"    let jsonData = pm.response.json();",
-							"    if (jsonData._id) {",
-							"        pm.collectionVariables.set(\"idUsuario\", jsonData._id);",
-							"    }",
-							"}",
-							""
+							"})"
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -237,14 +229,7 @@
 						"exec": [
 							"pm.test(\"Status code é 200 para excluir usuário\", function () {",
 							"    pm.response.to.have.status(200);",
-							"});",
-							"",
-							"if (pm.response.code === 200) {",
-							"    let jsonData = pm.response.json();",
-							"    if (jsonData._id) {",
-							"        pm.collectionVariables.set(\"idUsuario\", jsonData._id);",
-							"    }",
-							"}"
+							"})"
 						],
 						"type": "text/javascript",
 						"packages": {}
